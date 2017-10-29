@@ -5,6 +5,7 @@ use base 'Module::Build::XSUtil';
 
 sub new {
     my ($class, %args) = @_;
+
     $class->SUPER::new(
         %args,
         c_source => ['src'],
@@ -15,20 +16,51 @@ sub new {
     );
 }
 
+sub _derive_opcode {
+    my ($self, $script, $source, $derived) = @_;
+    my @cmd = ($self->{properties}{perl}, $script, $source);
+    $self->log_info("@cmd > $derived\n");
+    open my $fh, ">", $derived or die "$derived: $!";
+    print {$fh} $self->_backticks(@cmd);
+}
+
 sub ACTION_build {
     my ($self, @args) = @_;
 
-    my @cmd = (
-        "$^X tool/opcode.PL src/xslate_opcode.inc > src/xslate_ops.h",
-        "$^X tool/opcode_for_pp.PL src/xslate_opcode.inc > lib/Text/Xslate/PP/Const.pm",
-    );
-    for my $cmd (@cmd) {
-        $self->log_info("$cmd\n");
-        system $cmd;
-    }
+    my @derive = (
+        {
+            pureperl_only => 0,
+            source => "src/xslate_opcode.inc",
+            derived => "lib/Text/Xslate/PP/Const.pm",
+            code => sub {
+                my ($self, $source, $derived) = @_;
+                $self->_derive_opcode("tool/opcode_for_pp.PL", $source, $derived);
+            },
+        },
+        {
+            pureperl_only => 1,
+            source => "src/xslate_opcode.inc",
+            derived => "src/xslate_ops.h",
+            code => sub {
+                my ($self, $source, $derived) = @_;
+                $self->_derive_opcode("tool/opcode.PL", $source, $derived);
+            },
+        },
+        {
+            pureperl_only => 1,
+            source => "src/xslate_methods.xs",
+            derived => "src/xslate_methods.c",
+            code => sub {
+                my ($self, $source, $derived) = @_;
+                $self->compile_xs($source, outfile => $derived);
+            },
+        }
 
-    if (!$self->pureperl_only && !$self->up_to_date("src/xslate_methods.xs", "src/xslate_methods.c")) {
-        $self->compile_xs("src/xslate_methods.xs", outfile => "src/xslate_methods.c");
+    );
+    for my $derive (@derive) {
+        next if $derive->{pureperl_only} and $self->pureperl_only;
+        next if $self->up_to_date($derive->{source}, $derive->{derived});
+        $derive->{code}->($self, $derive->{source}, $derive->{derived});
     }
 
     $self->SUPER::ACTION_build(@args);
