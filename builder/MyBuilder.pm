@@ -24,7 +24,7 @@ sub _derive_opcode {
     print {$fh} $self->_backticks(@cmd);
 }
 
-sub ACTION_build {
+sub ACTION_code {
     my ($self, @args) = @_;
 
     my @derive = (
@@ -63,7 +63,7 @@ sub ACTION_build {
         $derive->{code}->($self, $derive->{source}, $derive->{derived});
     }
 
-    $self->SUPER::ACTION_build(@args);
+    $self->SUPER::ACTION_code(@args);
 }
 
 sub ACTION_test {
