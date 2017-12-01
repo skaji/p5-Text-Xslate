@@ -1,6 +1,10 @@
 sudo: false
 language: perl
 install: cpanm --installdeps --notest --quiet --with-configure --with-develop .
+script:
+  - perl Build.PL && ./Build
+  - PERL_DL_NONLAZY=1 XSLATE=xs prove -br -j4 t xt
+  - PERL_ONLY=1 prove -br -j4 t xt
 perl:
   - "5.8"
   - "5.10"
