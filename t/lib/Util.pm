@@ -31,4 +31,26 @@ sub path () {
 }
 
 use constant cache_dir => ".xslate_cache/$0";
+
+sub mtimes {
+    my @file;
+    for my $e (@_) {
+        if (-f $e) {
+            push @file, $e;
+        } elsif (-d $e) {
+            require File::Find;
+            File::Find::find({
+                wanted => sub { push @file, $_ if -f },
+                no_chdir => 1,
+            });
+        }
+    }
+    require POSIX;
+    join "\n", map {
+        my $file = $_;
+        my $mtime = (stat $file)[9];
+        POSIX::strftime("%Y-%m-%d %H:%M:%S%z", localtime $mtime)
+            . " $mtime $file";
+    } sort @file;
+}
 1;

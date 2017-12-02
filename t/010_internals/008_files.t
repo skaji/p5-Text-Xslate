@@ -78,8 +78,13 @@ copy "$x.mod" =>  $x;
 
 utime $^T+10, $^T+10, $x;
 
-is $tx->render('hello.tx', { lang => 'Perl' }),
-    "Hi, Perl.\n", "auto reload $_" for 1 .. 2;
+for (1..2) {
+    is $tx->render('hello.tx', { lang => 'Perl' }),
+        "Hi, Perl.\n", "auto reload $_";
+    diag "";
+    diag "--> \$^T = $^T, time = " . time;
+    diag Util::mtimes(@caches, $x, "$x.save", "$x.mod");
+}
 
 move "$x.save" => $x or diag "cannot move $x.save to $x: $!";
 
