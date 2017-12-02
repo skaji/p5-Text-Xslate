@@ -13,4 +13,29 @@ install:
 test_script:
   - perl Build.PL
   - perl ./Build
-  - perl ./Build test
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
+  - prove -b t\010_internals\008_files.t t\010_internals\039_taint_issue84.t
