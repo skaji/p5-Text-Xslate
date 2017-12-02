@@ -73,10 +73,10 @@ my $tx = Text::Xslate->new(path => [path], cache_dir => cache_dir);
 is $tx->render('hello.tx', { lang => 'Xslate' }), "Hello, Xslate world!\n", "file";
 
 # change the content
-move  $x      => "$x.save";
-copy "$x.mod" =>  $x;
+move  $x      => "$x.save" or die "move $x, $x.save: $!";
+copy "$x.mod" =>  $x or die "copy $x.mod, $x: $!";
 
-utime $^T+10, $^T+10, $x;
+utime $^T+10, $^T+10, $x or die "utime $^T + 10, $^T + 10, $x: $!";
 
 is $tx->render('hello.tx', { lang => 'Perl' }),
     "Hi, Perl.\n", "auto reload $_" for 1 .. 2;
