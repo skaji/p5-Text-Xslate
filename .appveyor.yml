@@ -2,6 +2,8 @@ build: off
 shallow_clone: true
 skip_tags: true
 skip_branch_with_pr: true
+cache:
+  - C:\strawberry
 init:
   - git config --global core.autocrlf input
 install:
@@ -11,4 +13,24 @@ install:
 test_script:
   - perl Build.PL
   - perl ./Build
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
+  - perl ./Build test
   - perl ./Build test
