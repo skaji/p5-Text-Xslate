@@ -45,12 +45,11 @@ sub mtimes {
             });
         }
     }
-    require POSIX;
     join "\n", map {
         my $file = $_;
-        my $mtime = (stat $file)[9];
-        POSIX::strftime("%Y-%m-%d %H:%M:%S%z", localtime $mtime)
-            . " $mtime $file";
+        my @stat = stat $file;
+        sprintf "atime %s, mtime %s, ctime %s: %s",
+            $stat[8], $stat[9], $stat[10], $file;
     } sort @file;
 }
 1;

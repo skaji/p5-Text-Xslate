@@ -83,7 +83,7 @@ for (1..2) {
         "Hi, Perl.\n", "auto reload $_";
     diag "";
     diag "--> \$^T = $^T, time = " . time;
-    diag Util::mtimes(@caches, $x, "$x.save", "$x.mod");
+    diag Util::mtimes(@caches, $x, "$x.save", "$x.mod", "t/template/hello.tx", "t/template/hello.tx.mod", "t/template/hello.tx.save");
 }
 
 move "$x.save" => $x or diag "cannot move $x.save to $x: $!";
